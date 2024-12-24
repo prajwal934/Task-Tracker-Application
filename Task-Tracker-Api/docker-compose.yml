@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0              # MySQL version 8.0
+    container_name: mysql-db      # Name of the container
+    restart: always               # Ensures the container always restarts
+    ports:
+      - "3306:3306"               # Maps MySQL default port 3306 to host
+    environment:
+      MYSQL_ROOT_PASSWORD: root   # Root password
+      MYSQL_DATABASE: mydb        # Database name
+      MYSQL_USER: root            # Username
+      MYSQL_PASSWORD: root        # Password for the user
+    volumes:
+      - db_data:/var/lib/mysql    # Persistent storage for MySQL data
+    networks:
+      - app-network               # Custom network for service communication
+
+volumes:
+  db_data:                        # Named volume for data persistence
+
+networks:
+  app-network:                    # Custom network to isolate services
+    driver: bridge
